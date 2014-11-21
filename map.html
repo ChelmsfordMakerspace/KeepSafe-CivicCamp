@@ -1,16 +1,23 @@
+<!DOCTYPE html>
 <html>
 	<head>
+	    <meta charset="UTF-8"> 
 		<title>Keepsafe - Map View</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6GJyhnAAaFa17tKwoLlVw_h-4pqMCiLU" type="text/javascript"></script>
+        <style>
+          html, body,.googlemap {
+            height: 100%;
+            width:100%;
+            margin: 0px;
+            padding: 0px
+          }
+        </style>
 	</head>
 
 	<body>
-	<h1>Keep Safe</h1>
-	<h2>Map View</h2>
-	<hr></hr>
-	<div class="googlemap">
-		Fill me.
-	</div>
-		<script src="js/main.js"></script>
-
+	    <h1>Keep Safe</h1>
+	    <div class="googlemap"></div>
+	    <script src="js/main.js"></script>
+    </body>
 </html>
