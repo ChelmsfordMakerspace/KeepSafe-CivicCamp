@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	    <meta charset="UTF-8"> 
-		<title>Keepsafe - Map View</title>
+	    	<meta charset="UTF-8"> 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6GJyhnAAaFa17tKwoLlVw_h-4pqMCiLU&libraries=places" type="text/javascript"></script>
-        <style>
-          html, body,.googlemap {
-            height: 100%;
-            width:100%;
-            margin: 0px;
-            padding: 0px
-          }
-        </style>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6GJyhnAAaFa17tKwoLlVw_h-4pqMCiLU&libraries=places"></script>
+		<style>
+		  html, body,.googlemap {
+		    height: 100%;
+		    width:100%;
+		    margin: 0px;
+		    padding: 0px
+		  }
+		</style>
+		<title>
+			Keep Safe Essex Map
+		</title>
 	</head>
-
 	<body>
 	    <h1>Keep Safe</h1>
-	    <div class="googlemap"></div>0
+	    <p>Search for a location
+	       <form id = "search_location">
+	    	<input type = "text" name = "search_location">
+	    	<input type = "submit" value = "Search">
+	    	</form>
+	    </p>
+	    <p> Or...
+    	    <button onclick="FindCurrentPosition();">Find me</button>
+	    <div class="googlemap"></div>
 	    <script src="js/main.js"></script>
     </body>
 </html>

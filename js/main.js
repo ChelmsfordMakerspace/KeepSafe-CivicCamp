@@ -14,7 +14,7 @@ function LoadDatabase(URL){
 		success:function( data )
 		{
 			window.ksPlaces = data;
-			PopulateMap();
+			//PopulateMap();
 		}
 	});
 }
@@ -53,38 +53,11 @@ function AddLocationMarker(locationObject){
 function loadMap(){
     //Create a maps
     map = new google.maps.Map($('.googlemap')[0],{zoom: 15});
-	places = new google.maps.places.PlacesService(map);
-    if(navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-			window.userPosition = position.coords;
-            map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
-            var infowindow = new google.maps.InfoWindow({
-                map: map,
-                position: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-                content: 'You are here.'
-            });
-            
-            //Remove listings
-            var noPoi = [
-			{
-				featureType: "poi",
-				stylers: [
-				  { visibility: "off" }
-				]   
-			}
-			];
-			map.setOptions({styles: noPoi});
-			
-		LoadDatabase(databaseURL);
-        });
-    }
-    else{
-            //Err, dunno.
-            alert("Sorry, we could not find you!"); //Replace this with something less alarming.
-    }
+    places = new google.maps.places.PlacesService(map);
+    FindCurrentPosition();
+    LoadDatabase(databaseURL);
+    //PopulateMap();
 }
-
-loadMap();
 
 //Iterate through locations
 function PopulateMap(){
@@ -94,3 +67,19 @@ function PopulateMap(){
 		}
 	}
 }
+
+function FindCurrentPosition(){
+	if(navigator.geolocation) {
+        	navigator.geolocation.getCurrentPosition(function(position) {
+			window.userPosition = position.coords;
+            		map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+            		var infowindow = new google.maps.InfoWindow({
+                		map: map,
+		                position: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
+                		content: 'You are here.'
+            		});
+		});
+	}
+}
+
+loadMap();
