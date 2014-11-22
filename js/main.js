@@ -5,6 +5,8 @@
 //Constant Variables
 var databaseURL = "keepsafe.json";
 var map;
+var places;
+var geocoder = new google.maps.Geocoder();
 //Load the JSON File
 function LoadDatabase(URL){
 	$.ajax(URL,{
@@ -17,34 +19,41 @@ function LoadDatabase(URL){
 	});
 }
 
+function PlacesSearchCallback( results,status ){
+	if (status == "OK") {
+		//Check place
+	}
+	else if(status == "OVER_QUERY_LIMIT"){
+		console.log("Google won't let us have any more requests.")
+	}
+	else{
+		console.log("Captain, we have an " + status + " whenever we query for place locations.");
+	}
+}
+
 function AddLocationMarker(locationObject){
 	//Get a good latlang
 	var request = {};
-	request.query = locationObject.name + '+' + locationObject.postcode;
-	service = new google.maps.places.PlacesService(map);
-	service.textSearch(request,function( results,status )
-		{
-			if (status == google.maps.places.PlacesServiceStatus.OK) {
-				var marker = new google.maps.Marker({
-					position: results[0].geometry.LatLng,
-					map: map,
-					title:results[0].name
-				});
-			}
-			else if(status == "OVER_QUERY_LIMIT"){
-				console.log("Google won't let us have any more requests.")
-			}
-			else{
-				console.log("Captain, we have an " + status + " whenever we query for place locations.");
-			}
-
+	geocoder.geocode( {'address': locationObject.postcode},function(results, status){
+		if(status == "OK"){
+			var marker = new google.maps.Marker({
+				position: results[0].geometry.location,
+				map: map,
+				title:"NoNameSet"
+			});	
+			google.maps.event.addListener(marker, 'click', function() {
+				//Do a places search.
+				map.setZoom(8);
+				map.setCenter(marker.getPosition());
+			});	
 		}
-	);
+	});
+	places.textSearch(request,PlacesSearchCallback);
 }
 function loadMap(){
     //Create a maps
     map = new google.maps.Map($('.googlemap')[0],{zoom: 15});
-
+	places = new google.maps.places.PlacesService(map);
     if(navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
 			window.userPosition = position.coords;
@@ -62,7 +71,7 @@ function loadMap(){
 				stylers: [
 				  { visibility: "off" }
 				]   
-			  }
+			}
 			];
 			map.setOptions({styles: noPoi});
 			
@@ -81,7 +90,7 @@ loadMap();
 function PopulateMap(){
 	for(var district in window.ksPlaces){
 		for(var iPlace = 0;iPlace<window.ksPlaces[district].length;iPlace++){
-			AddLocationMarker(window.ksPlaces[district][iPlace])
+			setTimeout(AddLocationMarker(window.ksPlaces[district][iPlace]),iPlace); //Make sure it fires with a decent interval
 		}
 	}
 }
