@@ -1,7 +1,63 @@
-[
-  {
-    "name": "Dummy Location",
-    "postcode": "CB1 1PT",
-    "phone": "01234567890"
-  }
-]
+{
+  "Chelmsford":[
+    {"name":"Chelmsford City Council Offices","postcode":"CM1 1JE"},
+    {"name":"Essex County Council Offices","postcode":"CM1 1QH"},
+    {"name":"Bus Station","postcode":"CM1 1GZ"},
+    {"name":"High Chelmer Shopping Centre","postcode":"CM1 1XB"},
+    {"name":"Chelmsford Library","postcode":"CM1 1LH"},
+    {"name":"McDonalds (High Street)","postcode":"CM1 1BE"},
+    {"name":"Odeon Cinema","postcode":"CM2 6FH"},
+    {"name":"The Meadows Shopping Centre","postcode":"CM2 0DG"},
+    {"name":"Tesco, Springfield Road","postcode":"CM2 6QT"},
+    {"name":"Tesco Express, Waterhouse Ln","postcode":"CM1 2RY"},
+    {"name":"Police Station, New Street","postcode":"CM1 1NF"},
+    {"name":"Riverside Ice & Leisure Centre","postcode":"CM1 1FG"},
+    {"name":"Chelmsford Sports & Athletics Centre","postcode":"CM1 2EH"},
+    {"name":"Chelmsford Voluntary Service","postcode":"CM1 1FW"},
+    {"name":"City of Chelmsford Mencap","postcode":"CM2 0DZ"},
+    {"name":"Quadrant","postcode":"CM2 0LS"},
+    {"name":"Schoolwear Plus","postcode":"CM2 0NF"},
+    {"name":"Essex Cares Charles Dickens Crt","postcode":"CM1 4XS"},
+    {"name":"Essex Cares Chelmsford Resource Centre","postcode":"CM1 2SL"},
+    {"name":"Essex Cares Highfields","postcode":"CM2 9AQ"},
+    {"name":"Home Instead Senior Care, Baddow Rd","postcode":"CM2 7PZ"}
+  ],
+  "Braintree":[
+    {"name":"Braintree Police Station","postcode":"CM7 3DJ"},
+    {"name":"Braintree Town Hall","postcode":"CM7 3YG"},
+    {"name":"George Yard Management Centre","postcode":"CM7 1RB"},
+    {"name":"Discovery Centre","postcode":"CM7 8FS"},
+    {"name":"Essex Cares Witham","postcode":"CM8 1BA"},
+    {"name":"Greenfields, Witham","postcode":"CM8 1BJ"},
+    {"name":"Greenfields, Braintree","postcode":"CM7 8FG"},
+    {"name":"Greenfields, Halstead","postcode":"CO9 2AJ"},
+    {"name":"Braintree Mencap","postcode":"CM7 9DB"},
+    {"name":"Halstead Cafe","postcode":"CO9 2JB"},
+    {"name":"John Mitchell Electrical","postcode":"CM7 3HF"},
+    {"name":"Sainsbury's, Braintree","postcode":"CM7 1XH"},
+    {"name":"Morrisons","postcode":"CM7 2QP"},
+    {"name":"Roundwood Garden Centre","postcode":"CM7 5LJ"},
+    {"name":"Tesco, Braintree","postcode":"CM7 3HQ"},
+    {"name":"Sainsbury's, Halstead","postcode":"CO9 2JB"},
+    {"name":"Solar Co-op, Halstead","postcode":"CO9 2JN"},
+    {"name":"Thing Me Bobs","postcode":"CO9 2JB"},
+    {"name":"Tesco, Witham","postcode":"CM8 2YT"},
+    {"name":"Royal British Legion","postcode":"CO9 1ET"},
+    {"name":"Witham Library ","postcode":"CM8 2YT"},
+    {"name":"Witham Town Hall","postcode":"CM8 2FE"},
+    {"name":"Braintree Museum","postcode":"CM7 3HW"},
+    {"name":"Wetherspoons, Braintree","postcode":"CM7 3HA"},
+    {"name":"Wetherspoons ","postcode":"CM8 1AH"}
+  ],
+  "Rochford":[
+    {"name":"Cancer Research, Rayleigh","postcode":"SS6 7EW"},
+    {"name":"Boots, Rayleigh","postcode":"SS6 7EJ"},
+    {"name":"Co-op, Rayleigh","postcode":"SS6 8JQ"},
+    {"name":"Rayleigh Library","postcode":"SS6 7EF"},
+    {"name":"Bentleys, Rayleigh","postcode":"SS6 7JD"},
+    {"name":"Feathering Your Nest","postcode":"SS6 7EF"},
+    {"name":"Squires Coffee Shop","postcode":"SS6 7EW"},
+    {"name":"Holy Trinity Church","postcode":"SS6 8BB"},
+    {"name":"Rayleigh Baptist Church","postcode":"SS6 7QA"}
+  ]
+}
