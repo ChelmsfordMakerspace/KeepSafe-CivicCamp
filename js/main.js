@@ -7,6 +7,16 @@ var databaseURL = "keepsafe.json";
 var map;
 var places;
 var geocoder = new google.maps.Geocoder();
+var clickPosition;
+var defaultLocation = new google.maps.LatLng(51.8366866,0.697972);
+var pinIcon = new google.maps.MarkerImage(
+    "assets/logos/Keep_Safe_transparent.png",
+    null, /* size is determined at runtime */
+    null, /* origin is 0,0 */
+    null, /* anchor is bottom center of the scaled image */
+    new google.maps.Size(42, 68)
+);  
+
 //Load the JSON File
 function LoadDatabase(URL){
 	$.ajax(URL,{
@@ -14,7 +24,7 @@ function LoadDatabase(URL){
 		success:function( data )
 		{
 			window.ksPlaces = data;
-			//PopulateMap();
+			PopulateMap();
 		}
 	});
 }
@@ -22,6 +32,11 @@ function LoadDatabase(URL){
 function PlacesSearchCallback( results,status ){
 	if (status == "OK") {
 		//Check place
+		var infowindow = new google.maps.InfoWindow({
+			map: map,
+			position: clickPosition,
+			content: "<h4>"+results[0].name+"</h4><b>Phone:</b>"+results[0].formatted_phone_number
+		});
 	}
 	else if(status == "OVER_QUERY_LIMIT"){
 		console.log("Google won't let us have any more requests.")
@@ -37,33 +52,32 @@ function AddLocationMarker(locationObject){
 	geocoder.geocode( {'address': locationObject.postcode},function(results, status){
 		if(status == "OK"){
 			var marker = new google.maps.Marker({
+				//icon: pinIcon,
 				position: results[0].geometry.location,
 				map: map,
-				title:"NoNameSet"
 			});	
 			google.maps.event.addListener(marker, 'click', function() {
-				//Do a places search.
-				map.setZoom(8);
-				map.setCenter(marker.getPosition());
+				clickPosition = marker.getPosition();
+				map.setZoom(17);
+				map.setCenter(clickPosition);
+				places.textSearch({query:results[0].formatted_address},PlacesSearchCallback);
 			});	
 		}
 	});
-	places.textSearch(request,PlacesSearchCallback);
 }
 function loadMap(){
     //Create a maps
-    map = new google.maps.Map($('.googlemap')[0],{zoom: 15});
+    map = new google.maps.Map($('.googlemap')[0],{zoom: 12,center:defaultLocation});
     places = new google.maps.places.PlacesService(map);
     FindCurrentPosition();
     LoadDatabase(databaseURL);
-    //PopulateMap();
 }
 
 //Iterate through locations
 function PopulateMap(){
 	for(var district in window.ksPlaces){
 		for(var iPlace = 0;iPlace<window.ksPlaces[district].length;iPlace++){
-			setTimeout(AddLocationMarker(window.ksPlaces[district][iPlace]),iPlace); //Make sure it fires with a decent interval
+			AddLocationMarker(window.ksPlaces[district][iPlace]);
 		}
 	}
 }
