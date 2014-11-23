@@ -5,12 +5,18 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6GJyhnAAaFa17tKwoLlVw_h-4pqMCiLU&libraries=places"></script>
 		<link rel="stylesheet" type="text/css" href="css/foundation.css">
+		<link rel="icon" sizes="120x120" href="img/appicon.png">
 		<style>
-		  html, body,.googlemap {
+		  html, body {
 		    height: 100%;
 		    width:100%;
 		    margin: 0px;
 		    padding: 0px
+		  }
+		  .googlemap{
+		    height:100%;
+		    width:96%;
+		    margin: 2%;
 		  }
 		</style>
 		<title>
@@ -18,8 +24,18 @@
 		</title>
 	</head>
 	<body>
-	    <h1>Keep Safe</h1>
-	    <p>Search for a location</p>
+	 <h1 class="text-center">Keep Safe Locations</h1>
+	 <div class="row">
+      <div class="large-12 columns text-center">
+      	<ul class="button-group">
+    		<li><a role="button" tabindex="0" class="button">Sign in</a></li>
+    		<li><a role="button" tabindex="0" class="button">Register</a></li>
+    		<li><a role="button" href="index.html" tabindex="0" class="button">Home</a></li>
+    	</ul>
+    </div>
+    </div>
+	<div class="row">
+      <div class="large-12 columns">
 		  <div class="row">
 			<div class="large-12 columns">
 			  <div class="row collapse">
@@ -43,7 +59,11 @@
 			<b>Map Point Progress:</b>
 			<progress id="mapProgress" value=0></progress>
     	</p>
-	    <div class="googlemap"></div>
-	    <script src="js/main.js"></script>
+    	</div>
+    	</div>
+		<div class="googlemap"></div>
+		<script src="js/main.js"></script>
+	   			 
+	  
     </body>
 </html>
