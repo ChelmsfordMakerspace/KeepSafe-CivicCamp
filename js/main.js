@@ -9,7 +9,6 @@ var places;
 var geocoder = new google.maps.Geocoder();
 var clickPosition;
 var defaultLocation = new google.maps.LatLng(51.8366866,0.697972);
-var postcodesTolatlng = {};
 var currentProgress = 0;
 var maxProgress = 0;
 var pinIcon = {
@@ -62,6 +61,20 @@ function PlacesSearchCallback( results,status ){
 	}
 }
 
+function LatLngToMarker(location){
+	var marker = new google.maps.Marker({
+		icon: pinIcon,
+		position: location,
+		map: map,
+	});	
+	google.maps.event.addListener(marker, 'click', function() {
+		clickPosition = marker.getPosition();
+		map.setZoom(17);
+		map.setCenter(clickPosition);
+		places.nearbySearch({location:clickPosition,radius:10},PlacesSearchCallback);
+	});	
+}
+
 function AddLocationMarker(district,iPlace){
 	//Get a good latlang
 	locationObject = window.ksPlaces[district][iPlace];
@@ -70,17 +83,10 @@ function AddLocationMarker(district,iPlace){
 	var request = {};
 	geocoder.geocode( {'address': locationObject.postcode},function(results, status){
 		if(status == "OK"){
-			var marker = new google.maps.Marker({
-				icon: pinIcon,
-				position: results[0].geometry.location,
-				map: map,
-			});	
-			google.maps.event.addListener(marker, 'click', function() {
-				clickPosition = marker.getPosition();
-				map.setZoom(17);
-				map.setCenter(clickPosition);
-				places.nearbySearch({location:clickPosition,radius:10},PlacesSearchCallback);
-			});	
+			var postcode = results[0].address_components[0].long_name;
+			//Cache the response
+			localStorage.setItem(postcode,results[0].geometry.location);
+			LatLngToMarker(results[0].geometry.location);
 		}
 		else{
 			console.log("Failed to add a point due to " + status)
@@ -88,7 +94,8 @@ function AddLocationMarker(district,iPlace){
 	});
 }
 function loadMap(){
-    //Create a maps
+	
+    //Create a map
     map = new google.maps.Map($('.googlemap')[0],{zoom: 12,center:defaultLocation});
     places = new google.maps.places.PlacesService(map);
     FindCurrentPosition();
@@ -99,7 +106,31 @@ function loadMap(){
 function PopulateMap(){
 	for(var district in window.ksPlaces){
 		for(var iPlace = 0;iPlace<window.ksPlaces[district].length;iPlace++){
-			setTimeout('AddLocationMarker("'+district+'",'+iPlace+');',iPlace*3000);
+			//Do we need to do this?
+			var needGeocode = true;
+			//Load the browser storage.
+			if(typeof(Storage) !== "undefined") {
+				// Code for localStorage/sessionStorage.
+				var locationObject = window.ksPlaces[district][iPlace];
+				if(localStorage[locationObject.postcode]){
+					var strlatlng = localStorage[locationObject.postcode];
+					strlatlng = strlatlng.replace('(','');
+					strlatlng = strlatlng.replace(')','');
+					var arrlatlng = strlatlng.split(", ");
+					var latlng =  new google.maps.LatLng(arrlatlng[0],arrlatlng[1]);
+					LatLngToMarker(latlng);
+					needGeocode = false;
+					currentProgress += 1;
+					$('#mapProgress').val(currentProgress);
+					if(currentProgress / maxProgress > 0.8){
+						$('#progressParagraph').hide();
+					}
+				}
+			}
+			if(needGeocode)
+			{
+				setTimeout('AddLocationMarker("'+district+'",'+iPlace+');',iPlace*3000);
+			}
 		}
 		maxProgress += window.ksPlaces[district].length;
 	}
