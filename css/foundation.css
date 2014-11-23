@@ -1111,11 +1111,11 @@ button, .button {
   padding-left: 2rem;
   font-size: 1rem;
   background-color: #FDED09;
-  border-color: #007095;
-  color: white;
+  border-color: #cbbd0a;
+  color: black;
   transition: background-color 300ms ease-out; }
   button:hover, button:focus, .button:hover, .button:focus {
-    background-color: #007095; }
+    background-color: #cbbd0a; }
   button:hover, button:focus, .button:hover, .button:focus {
     color: white; }
   button.secondary, .button.secondary {
@@ -1192,13 +1192,13 @@ button, .button {
     border-radius: 1000px; }
   button.disabled, button[disabled], .button.disabled, .button[disabled] {
     background-color: #FDED09;
-    border-color: #007095;
+    border-color: #cbbd0a;
     color: white;
     cursor: default;
     opacity: 0.7;
     box-shadow: none; }
     button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
-      background-color: #007095; }
+      background-color: #cbbd0a; }
     button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
       color: white; }
     button.disabled:hover, button.disabled:focus, button[disabled]:hover, button[disabled]:focus, .button.disabled:hover, .button.disabled:focus, .button[disabled]:hover, .button[disabled]:focus {
@@ -1899,10 +1899,10 @@ meta.foundation-mq-topbar {
         padding-right: 15px;
         padding-left: 15px;
         background-color: #FDED09;
-        border-color: #007095;
+        border-color: #cbbd0a;
         color: white; }
         .top-bar-section ul li > a.button:hover, .top-bar-section ul li > a.button:focus {
-          background-color: #007095; }
+          background-color: #cbbd0a; }
         .top-bar-section ul li > a.button:hover, .top-bar-section ul li > a.button:focus {
           color: white; }
       .top-bar-section ul li > a.button.secondary {
@@ -1942,10 +1942,10 @@ meta.foundation-mq-topbar {
       padding-right: 15px;
       padding-left: 15px;
       background-color: #FDED09;
-      border-color: #007095;
+      border-color: #cbbd0a;
       color: white; }
       .top-bar-section ul li > button:hover, .top-bar-section ul li > button:focus {
-        background-color: #007095; }
+        background-color: #cbbd0a; }
       .top-bar-section ul li > button:hover, .top-bar-section ul li > button:focus {
         color: white; }
       .top-bar-section ul li > button.secondary {
