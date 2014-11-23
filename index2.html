@@ -1,3 +1,36 @@
+<<<<<<< HEAD
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keep Safe</title>
+    <link rel="stylesheet" href="css/foundation.css" />
+    <script src="js/vendor/modernizr.js"></script>
+  </head>
+  <body>
+    
+        
+ 
+    <div class="row">
+      <div class="large-12 columns text-center">
+        <h1>Welcome to Keep Safe Essex</h1>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="large-12 columns text-center">
+      	<ul class="button-group">
+    		<li><div role="button" tabindex="0" class="button">Sign in</div></li>
+    		<li><div role="button" tabindex="0" class="button">Register</div></li>
+    	</ul>
+    </div>
+    </div>
+    
+    <div class="row">
+      <div class="large-12 columns text-center">
+      <img src="img/HeroImage.jpg"/>
+=======
 <!DOCTYPE html>
 <html lang="en">
         <meta charset="UTF-8"> 
@@ -5,8 +38,21 @@
 		  <link rel="stylesheet" href="css/foundation.css">
 		  
 		<script type="text/javascript">
-		var msg = new SpeechSynthesisUtterance('Help');
-    		window.speechSynthesis.speak(msg);
+		var msg = new SpeechSynthesisUtterance;
+		var voices = window.speechSynthesis.getVoices();
+    		msg.voice = voices[10];
+    		msg.voiceURI = 'native';
+    		msg.volume = 1;
+    		msg.rate = 1;
+    		msg.pitch = 2;
+    		msg.text = 'Help';
+    		msg.lang = 'en-US';
+    		
+    		msg.onend = function(e) {
+  		console.log('Finished in ' + event.elapsedTime + ' seconds.');
+		};
+		
+		speechSynthesis.speak(msg);
 		</script>
       <link rel="apple-touch-icon" sizes="120x120" href="/assets/logos/Keep_Safe_transparent.png">
       <link rel="icon" sizes="120x120" href="/assets/logos/Keep_Safe_transparent.png">
@@ -30,30 +76,45 @@
 	 <div class="row">
 	 <div class="large-6 columns">
 	 <ul>
+>>>>>>> FETCH_HEAD
 
-	<li> <a href="mailto:kryfu@braintree.gov.uk" class="button">Braintree District Council Kryshia Fuller</a></li>
-	<li><a href="mailto:chris.rust@maldon.gov.uk" class="button"> Maldon District Council Chris Rust </a></li>
-	<li><a href="paula.callender@rochford.gov.uk" class="button">Rochford District Council Paula Callender</a> </li>
-	<li><a href="tracey.lilley@brentwood.gov.uk" class="button">Brentwood District Council Tracey Lilley </a></li>
-	<li><a href="Jo.Rayment@frontline.org.uk" class="button">Frontline Partnership, Brentwood Jo Rayment </a></li>
-	<li><a href="Jo.Rayment@frontline.org.uk" class="button">Essex Mental Health Community,Brentwood Wayne Banks </a></li>
-	<li><a href="leah.lambert@homeinstead.co.uk" class="button">Home Instead, Brentwood Leah Lambert</a> </li>
-	<li><a href="lthornton@tendringdc.gov.uk" class="button">Tendring District Council Leanne Thornton </a></li>
-	<li><a href="rachel.kearn@chelmsfordcitycouncil.org.uk" class="button">Chelmsford City Council Rachel Kearn </a></li>
-	<li><a href="caroline.clarke@colchester.gov.uk" class="button">Colchester Borough Council Caroline Clarke </a></li>
-	<li><a href="mford@uttlesford.gov.uk" class="button">Uttlesford District Council Martin Ford </a></li>
-	<li><a href="cwiggins@eppingforestdc.gov.uk" class="button">Epping Forest District Council Caroline Wiggins </a></li>
+      <div class="panel">
+      <h3>Keep Safe Essex</h3>
+      <p>Helping older people and people with a learning disabilty in Essex to feel safer in their towns and communities.</p>
+      </div>
 
-</ul>
-	 </div>
-	 </div>
-	 <div class="row">
-  <div class="small-6 large-5 columns">
-  footer
-  </div>
-  <div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="large-12 columns text-center">
+        <h1>Welcome to Keep Safe Essex</h1>
+      </div>
+    </div>
 
+    <div class="row">
+      <div class="large-12 medium-12 columns">
 
-     </div>
-     </body>
+        <div class="row">
+          <div class="medium-6 columns">
+            <p>What is Keep Safe?</p> <p>Shops, libraries and businesses in town centres will let you use a telephone or make a call for you is you get into distress.</p> <p>The Keep Safe scheme has already helped more than 2,000 people older people and people with a learning disability in Essex to feel safer in their towns and communities.</p> <p>There are in excess of 100 Keep Safe venues across Essex, and by carrying Keep Safe cards and key rings labelled with essential telephone numbers, anyone who feels unwell, unsafe or disorientated can go to a Keep Safe venue and ask for help to contact a family member, friend or carer. The free scheme has received dedicated support from local traders and businesses offering to act as Keep Safe venues, and new partners to the scheme are always welcome.</p>
+          </div>
+        <div class="row">
+          <div class="medium-4 medium-offset-1 columns">
+              <img src="img/Keep_Safe_transparent.png"/>
+          </div>
+        </div>
+          
+    <div class="row">
+    	<div class="small-2 large-4 columns"><div class="circular"><img src="img/anxious.jpg"/></div><br/><p>You’re out and about, and you start to feel anxious or worried.</p></div>
+    	<div class="small-4 large-4 columns"><div class="circular"><img src="img/Keep_Safe_transparent.png"/></div><br/><p>Start the Keep Safe App and it will locate the nearest Keep Safe venues and direct you to the one you choose.<p/></div>
+    	<div class="small-6 large-4 columns"><div class="circular"><img src="img/calm.jpg"/></div><br/><p>Take a moment at your Keep Safe venue to relax, and feel yourself again.<p/></div>
+	</div> 
+    
+    <script src="js/vendor/jquery.js"></script>
+    <script src="js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
 </html>
