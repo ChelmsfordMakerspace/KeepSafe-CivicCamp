@@ -18,20 +18,24 @@
 		</title>
 	</head>
 	<body>
-	    <h1>Keep Safe</h1>
+	<div class="row">
+      <div class="large-12 columns">
+	    <h1 class="text-center">Keep Safe</h1>
 	    <p>Search for a location
 	       <form id = "search_location" onsubmit="searchForLocation();return false">
 	    	<input type = "text" name = "search_location">
 	    	<input type = "submit" value = "Search">
 	    	</form>
 	    </p>
-	    <p> Or...
+	    <p> Or...<br/>
     	    <button onclick="FindCurrentPosition();">Find me</button>
     	</p>
     	<p id="progressParagraph">
 			<b>Map Point Progress:</b>
 			<progress id="mapProgress" value=0></progress>
     	</p>
+    	</div>
+    	</div>
 	    <div class="googlemap"></div>
 	    <script src="js/main.js"></script>
     </body>
