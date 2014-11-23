@@ -9,13 +9,16 @@ var places;
 var geocoder = new google.maps.Geocoder();
 var clickPosition;
 var defaultLocation = new google.maps.LatLng(51.8366866,0.697972);
-var pinIcon = new google.maps.MarkerImage(
-    "assets/logos/Keep_Safe_transparent.png",
-    null, /* size is determined at runtime */
-    null, /* origin is 0,0 */
-    null, /* anchor is bottom center of the scaled image */
-    new google.maps.Size(42, 68)
-);  
+var postcodesTolatlng = {};
+var currentProgress = 0;
+var maxProgress = 0;
+var pinIcon = {
+  url: "assets/logos/Keep_Safe_transparent.png",
+  size: new google.maps.Size(46, 46),
+  origin: new google.maps.Point(0, 0),
+  anchor: new google.maps.Point(17, 34),
+  scaledSize: new google.maps.Size(46, 46)
+}; 
 
 //Load the JSON File
 function LoadDatabase(URL){
@@ -32,27 +35,43 @@ function LoadDatabase(URL){
 function PlacesSearchCallback( results,status ){
 	if (status == "OK") {
 		//Check place
+		var result;
+		for(var IResult = 0;IResult<results.length;IResult++){
+			if($.inArray('route',results[IResult].types) == -1){
+				result = results[IResult];
+				break;
+			}
+		}
+		if(result == undefined){
+			content = "Couldn't find any information on the place.";
+		}
+		else{
+			content = "<h4>"+result.name+"</h4><b>Phone:</b>"+result.formatted_phone_number;
+		}
 		var infowindow = new google.maps.InfoWindow({
 			map: map,
 			position: clickPosition,
-			content: "<h4>"+results[0].name+"</h4><b>Phone:</b>"+results[0].formatted_phone_number
+			content: content
 		});
 	}
 	else if(status == "OVER_QUERY_LIMIT"){
-		console.log("Google won't let us have any more requests.")
+		console.log("Google won't let us have any more requests.");
 	}
 	else{
 		console.log("Captain, we have an " + status + " whenever we query for place locations.");
 	}
 }
 
-function AddLocationMarker(locationObject){
+function AddLocationMarker(district,iPlace){
 	//Get a good latlang
+	locationObject = window.ksPlaces[district][iPlace];
+	currentProgress += 1;
+	$('#mapProgress').val(currentProgress);
 	var request = {};
 	geocoder.geocode( {'address': locationObject.postcode},function(results, status){
 		if(status == "OK"){
 			var marker = new google.maps.Marker({
-				//icon: pinIcon,
+				icon: pinIcon,
 				position: results[0].geometry.location,
 				map: map,
 			});	
@@ -60,8 +79,11 @@ function AddLocationMarker(locationObject){
 				clickPosition = marker.getPosition();
 				map.setZoom(17);
 				map.setCenter(clickPosition);
-				places.textSearch({query:results[0].formatted_address},PlacesSearchCallback);
+				places.nearbySearch({location:clickPosition,radius:10},PlacesSearchCallback);
 			});	
+		}
+		else{
+			console.log("Failed to add a point due to " + status)
 		}
 	});
 }
@@ -77,10 +99,13 @@ function loadMap(){
 function PopulateMap(){
 	for(var district in window.ksPlaces){
 		for(var iPlace = 0;iPlace<window.ksPlaces[district].length;iPlace++){
-			AddLocationMarker(window.ksPlaces[district][iPlace]);
+			setTimeout('AddLocationMarker("'+district+'",'+iPlace+');',iPlace*3000);
 		}
+		maxProgress += window.ksPlaces[district].length;
 	}
+	$('#mapProgress').attr('max',maxProgress);
 }
+
 
 function FindCurrentPosition(){
 	if(navigator.geolocation) {
