@@ -5,8 +5,21 @@
 		  <link rel="stylesheet" href="css/foundation.css">
 		  
 		<script type="text/javascript">
-		var msg = new SpeechSynthesisUtterance('Help');
-    		window.speechSynthesis.speak(msg);
+		var msg = new SpeechSynthesisUtterance;
+		var voices = window.speechSynthesis.getVoices();
+    		msg.voice = voices[10];
+    		msg.voiceURI = 'native';
+    		msg.volume = 1;
+    		msg.rate = 1;
+    		msg.pitch = 2;
+    		msg.text = 'Help';
+    		msg.lang = 'en-US';
+    		
+    		msg.onend = function(e) {
+  		console.log('Finished in ' + event.elapsedTime + ' seconds.');
+		};
+		
+		speechSynthesis.speak(msg);
 		</script>
       <link rel="apple-touch-icon" sizes="120x120" href="/assets/logos/Keep_Safe_transparent.png">
       <link rel="icon" sizes="120x120" href="/assets/logos/Keep_Safe_transparent.png">
