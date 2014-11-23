@@ -139,5 +139,37 @@ function FindCurrentPosition(){
 		});
 	}
 }
+$('#searchError').hide();
 
+$("#searchText").keyup(function (e) {
+    if (e.keyCode == 13) {
+		FindLocation();
+    }
+});
+
+function GotoPlacesLocation(results,status){
+	if(status == "OK"){
+		var bestLocation = results[0];
+        map.setCenter(bestLocation.geometry.location);
+		$('#searchError').hide();
+	}
+	else{
+		$('#searchError').fadeIn();
+	}
+}
+
+function FindLocation(){
+	var searchText = $('#searchText').val();
+	if(searchText == ""){
+		$('#searchError').fadeIn();
+		return false;
+	}
+	else{
+		$('#searchError').hide();
+	}
+	
+	service = new google.maps.places.PlacesService(map);
+	var request = {query:searchText};
+	service.textSearch(request, GotoPlacesLocation);
+}
 loadMap();

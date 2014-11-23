@@ -19,15 +19,26 @@
 	</head>
 	<body>
 	    <h1>Keep Safe</h1>
-	    <p>Search for a location
-	       <form id = "search_location" onsubmit="searchForLocation();return false">
-	    	<input type = "text" name = "search_location">
-	    	<input type = "submit" value = "Search">
-	    	</form>
+	    <p>Search for a location</p>
+		  <div class="row">
+			<div class="large-12 columns">
+			  <div class="row collapse">
+				<div class="small-12 columns">
+				  <input id="searchText" type="text" placeholder="Plan to visit somewhere?">
+				  <small id="searchError" class="error">Location Not Found!</small>
+				</div>
+			  </div>
+			  <div class="row collapse">
+				<div class="small-12 columns">
+					<ul class="button-group" style="width:100%;">
+					  <li style="width:50%;"><a href="#" style="width:100%;" onclick="FindLocation();" class="button">Search for Location</a></li>
+					  <li style="width:50%;"><a class="button" style="width:100%;" onclick="FindCurrentPosition();">Current Location</a></li>
+					</ul>	
+				</div>
+			  </div>
+			</div>
+		  </div>
 	    </p>
-	    <p> Or...
-    	    <button onclick="FindCurrentPosition();">Find me</button>
-    	</p>
     	<p id="progressParagraph">
 			<b>Map Point Progress:</b>
 			<progress id="mapProgress" value=0></progress>
