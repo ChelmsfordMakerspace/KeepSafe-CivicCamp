@@ -134,7 +134,7 @@ function FindCurrentPosition(){
             		var infowindow = new google.maps.InfoWindow({
                 		map: map,
 		                position: new google.maps.LatLng(position.coords.latitude,position.coords.longitude),
-                		content: 'You are here.'
+                		content: 'Here be you.'
             		});
 		});
 	}
