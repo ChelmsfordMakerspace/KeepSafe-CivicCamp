@@ -31,37 +31,7 @@ function LoadDatabase(URL){
 	});
 }
 
-function PlacesSearchCallback( results,status ){
-	if (status == "OK") {
-		//Check place
-		var result;
-		for(var IResult = 0;IResult<results.length;IResult++){
-			if($.inArray('route',results[IResult].types) == -1){
-				result = results[IResult];
-				break;
-			}
-		}
-		if(result == undefined){
-			content = "Couldn't find any information on the place.";
-		}
-		else{
-			content = "<h4>"+result.name+"</h4><b>Phone:</b>"+result.formatted_phone_number;
-		}
-		var infowindow = new google.maps.InfoWindow({
-			map: map,
-			position: clickPosition,
-			content: content
-		});
-	}
-	else if(status == "OVER_QUERY_LIMIT"){
-		console.log("Google won't let us have any more requests.");
-	}
-	else{
-		console.log("Captain, we have an " + status + " whenever we query for place locations.");
-	}
-}
-
-function LatLngToMarker(location){
+function LatLngToMarker(location,postcode){
 	var marker = new google.maps.Marker({
 		icon: pinIcon,
 		position: location,
@@ -71,22 +41,43 @@ function LatLngToMarker(location){
 		clickPosition = marker.getPosition();
 		map.setZoom(17);
 		map.setCenter(clickPosition);
-		places.nearbySearch({location:clickPosition,radius:10},PlacesSearchCallback);
+		var place;
+		//Find Location by postcode
+		for(var iPlace in window.ksPlaces){
+			if(postcode == window.ksPlaces[iPlace].Postcode){
+				place = window.ksPlaces[iPlace];
+			}
+		}
+		
+		
+		if(typeof place == 'undefined'){
+			content = "Couldn't find any information on the place.";
+		}
+		else{
+			content = "<h4>"+place.Venue+"</h4><b>Phone:</b>"+place.Phone;
+		}
+		
+		var infowindow = new google.maps.InfoWindow({
+			map: map,
+			position: clickPosition,
+			content: content
+		});
 	});	
+	
 }
 
-function AddLocationMarker(district,iPlace){
+function AddLocationMarker(iPlace){
 	//Get a good latlang
-	locationObject = window.ksPlaces[district][iPlace];
+	locationObject = window.ksPlaces[iPlace];
 	currentProgress += 1;
 	$('#mapProgress').val(currentProgress);
 	var request = {};
-	geocoder.geocode( {'address': locationObject.postcode},function(results, status){
+	geocoder.geocode( {'address': locationObject.Postcode},function(results, status){
 		if(status == "OK"){
 			var postcode = results[0].address_components[0].long_name;
 			//Cache the response
 			localStorage.setItem(postcode,results[0].geometry.location);
-			LatLngToMarker(results[0].geometry.location);
+			LatLngToMarker(results[0].geometry.location,postcode);
 		}
 		else{
 			console.log("Failed to add a point due to " + status)
@@ -104,35 +95,32 @@ function loadMap(){
 
 //Iterate through locations
 function PopulateMap(){
-	for(var district in window.ksPlaces){
-		for(var iPlace = 0;iPlace<window.ksPlaces[district].length;iPlace++){
-			//Do we need to do this?
-			var needGeocode = true;
-			//Load the browser storage.
-			if(typeof(Storage) !== "undefined") {
-				// Code for localStorage/sessionStorage.
-				var locationObject = window.ksPlaces[district][iPlace];
-				if(localStorage[locationObject.postcode]){
-					var strlatlng = localStorage[locationObject.postcode];
-					strlatlng = strlatlng.replace('(','');
-					strlatlng = strlatlng.replace(')','');
-					var arrlatlng = strlatlng.split(", ");
-					var latlng =  new google.maps.LatLng(arrlatlng[0],arrlatlng[1]);
-					LatLngToMarker(latlng);
-					needGeocode = false;
-					currentProgress += 1;
-					$('#mapProgress').val(currentProgress);
-					if(currentProgress / maxProgress > 0.8){
-						$('#progressParagraph').hide();
-					}
+	for(var iPlace in window.ksPlaces){
+		//Do we need to do this?
+		var needGeocode = true;
+		//Load the browser storage.
+		if(typeof(Storage) !== "undefined") {
+			// Code for localStorage/sessionStorage.
+			var locationObject = window.ksPlaces[iPlace];
+			if(localStorage[locationObject.Postcode]){
+				var strlatlng = localStorage[locationObject.Postcode];
+				strlatlng = strlatlng.replace('(','');
+				strlatlng = strlatlng.replace(')','');
+				var arrlatlng = strlatlng.split(", ");
+				var latlng =  new google.maps.LatLng(arrlatlng[0],arrlatlng[1]);
+				LatLngToMarker(latlng,locationObject.Postcode);
+				needGeocode = false;
+				currentProgress += 1;
+				$('#mapProgress').val(currentProgress);
+				if(currentProgress / maxProgress > 0.8){
+					$('#progressParagraph').hide();
 				}
 			}
-			if(needGeocode)
-			{
-				setTimeout('AddLocationMarker("'+district+'",'+iPlace+');',iPlace*3000);
-			}
 		}
-		maxProgress += window.ksPlaces[district].length;
+		if(needGeocode)
+		{
+			setTimeout('AddLocationMarker('+iPlace+');',iPlace*3000);
+		}
 	}
 	$('#mapProgress').attr('max',maxProgress);
 }
